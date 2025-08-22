@@ -13,8 +13,8 @@ export async function GET() {
 export async function POST(req) {
   // getting the posted Data
   try {
-    const postData = await req.json();
-    const insertedData = await dbConnect("products").insertOne(postData);
+    const data = await req.json();
+    const insertedData = await dbConnect("products").insertOne(data);
     return new Response(
       JSON.stringify({
         message: "Product added successfully",

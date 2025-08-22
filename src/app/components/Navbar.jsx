@@ -23,7 +23,7 @@ export default function Navbar() {
     const links = <>
         <li><NavLink href="/">Home</NavLink></li>
         <li><NavLink href="/products">Products</NavLink></li>
-        <li><NavLink href="/add-product">Add Product</NavLink></li>
+        <li><NavLink href="/products/add">Add Product</NavLink></li>
 
     </>
     return (
