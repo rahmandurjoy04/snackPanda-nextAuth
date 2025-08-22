@@ -1,29 +1,30 @@
 import Link from 'next/link';
-import React from 'react'
+import dbConnect from '@/lib/dbConnect';
+import { ObjectId } from 'mongodb';
+export const dynamic = "force-dynamic";
 
 export default async function ProductDetails({ params }) {
   let product = null;
   let error = null;
 
   try {
-    const { id } = await params;
-    // Fetch product data from the API route
-    const res = await fetch(`${process.env.BASE_URL}/api/products/${id}`, {
-      cache: "no-store", // Ensure fresh data
-    });
-    const { data, error: apiError } = await res.json();
+    const { id } =await params;
 
-    if (!res.ok || apiError) {
-      throw new Error(apiError || "Product not found");
+    if (!ObjectId.isValid(id)) {
+      throw new Error("Invalid product ID");
     }
 
-    product = data;
+    // Fetch product directly from MongoDB
+    product = await dbConnect('products').findOne({ _id: new ObjectId(id) });
+
+    if (!product) {
+      throw new Error("Product not found");
+    }
   } catch (err) {
     console.error("Error fetching product:", err);
     error = err.message || "Failed to load product";
   }
 
-  // Handle case where product is not found or there's an error
   if (error || !product) {
     return (
       <div className="min-h-screen bg-gray-100 py-8">
@@ -36,6 +37,7 @@ export default async function ProductDetails({ params }) {
       </div>
     );
   }
+
   return (
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="container mx-auto px-4">
@@ -63,5 +65,5 @@ export default async function ProductDetails({ params }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,22 +1,18 @@
 import Link from "next/link";
+import dbConnect from "@/lib/dbConnect"; // Import your DB helper
+
+export const revalidate = 60; // Optional: ISR, refresh every 60s
 
 export default async function Highlights() {
   let products = [];
   let error = null;
 
   try {
-    // Fetch data from the API route
-    const res = await fetch(`${process.env.BASE_URL}/api/products`, {
-      cache: "no-store", // Ensure fresh data
-    });
-    const { data } = await res.json();
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch products");
-    }
-
-    // Limit to 4 products
-    products = data ? data.slice(0, 4) : [];
+    // Directly fetch from MongoDB instead of calling your own API
+    products = await dbConnect("products")
+      .find({})
+      .limit(4) // Only get 4 products
+      .toArray();
   } catch (err) {
     console.error("Error fetching products:", err);
     error = "Failed to load highlights";
@@ -26,12 +22,12 @@ export default async function Highlights() {
     <section className="py-8 max-w-11/12 mx-auto">
       <div className="mx-auto">
         <h2 className="text-4xl font-bold text-center mb-6 text-gray-800">Highlights</h2>
-        {error && (
-          <p className="text-red-500 text-center mb-4">{error}</p>
-        )}
+
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         {products.length === 0 && !error && (
           <p className="text-center text-gray-600">No products available.</p>
         )}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product) => (
             <div

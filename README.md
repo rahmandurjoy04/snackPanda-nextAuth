@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SnacksPanda
 
-## Getting Started
+A modern food product management web application built with **Next.js 15**, **TailwindCSS**, and **MongoDB**.  
+Users can browse, add, and view detailed product information. The app also supports authentication and role-based access.
 
-First, run the development server:
+---
+
+## Features
+
+- Browse all products with images, descriptions, and prices.
+- View detailed product pages with nutritional info and quantity.
+- Add new products (admin/authorized users).
+- Highlights section showing featured products.
+- Responsive design with TailwindCSS.
+- Server-side rendering with caching and revalidation.
+
+---
+
+## Setup & Installation
+
+1. **Clone the repository**
 
 ```bash
+git clone https://github.com/yourusername/snackspanda.git
+cd snackspanda
+Install dependencies
+
+
+npm install
+Environment variables
+
+Create a .env.local file at the root and add:
+
+env
+
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+MONGODB_URI=your_mongodb_connection_string
+NEXTAUTH_SECRET=your_secret_key
+
+
+Run the development server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Open http://localhost:3000 in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build for production
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+npm run build
+npm start
+Route Summary
+Pages
+Route	Method	Description
+/	GET	Home page
+/products	GET	List all products
+/products/[id]	GET	Product details page
+/products/add	GET / POST	Add new product form & submission
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+API Routes
+Route	Method	Description
+/api/products	GET	Fetch all products
+/api/products	POST	Add a new product
+/api/products/[id]	GET	Fetch product by ID

@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 export default function ProductAddForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -81,7 +83,8 @@ export default function ProductAddForm() {
         confirmButtonText: 'OK',
         timerProgressBar: true,
       });
-
+      //  Redirecting to home after successful product post
+      router.push('/products')
 
       setFormData({
         name: '',

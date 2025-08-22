@@ -1,11 +1,10 @@
 import dbConnect from "@/lib/dbConnect";
-import { ObjectId } from "mongodb"; 
+import { ObjectId } from "mongodb";
 
-export async function GET(req, { params }) {
+export async function GET(req, context) {
   try {
     // Extract the ID from the URL parameters
-    const { id } =await params;
-
+    const { id } = await context.params;
     // Validate the ID format
     if (!ObjectId.isValid(id)) {
       return new Response(JSON.stringify({ error: "Invalid ID format" }), {
