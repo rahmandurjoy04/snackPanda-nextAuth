@@ -1,15 +1,11 @@
 "use client"
-
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import LoginButton from './LoginButton'
-import UserInfo from './UserInfo'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '../api/auth/[...nextauth]/route'
 
-export default async function Navbar() {
-    const session = await getServerSession(authOptions)
+
+export default function Navbar() {
 
     // Created a NavLink Function So that It can show active routing
     function NavLink({ href, children }) {
@@ -60,12 +56,7 @@ export default async function Navbar() {
                 </div>
                 <div className="navbar-end">
                     {/* Conditionally showing login or logout when a user is present or not */}
-                    <div>
-                        {/* <UserInfo></UserInfo> */}
-                        {
-                            JSON.stringify(session)
-                        }
-                    </div>
+                    
                     <div>
                         <LoginButton></LoginButton>
                     </div>
